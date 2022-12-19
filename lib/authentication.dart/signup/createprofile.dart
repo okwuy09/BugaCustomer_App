@@ -5,8 +5,11 @@ import 'package:buga_customer/component/colors.dart';
 import 'package:buga_customer/component/mytextform.dart';
 import 'package:buga_customer/component/style.dart';
 import 'package:buga_customer/homepage/bottomnarvbar.dart';
+import 'package:buga_customer/services/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateProfile extends StatefulWidget {
   const CreateProfile({
@@ -50,6 +53,8 @@ class _CreateProfileState extends State<CreateProfile> {
   Widget build(BuildContext context) {
     // used to determined the screen size for responsive design
     var screensize = MediaQuery.of(context).size;
+    var provider = Provider.of<Authentication>(context);
+
     return Scaffold(
       backgroundColor: AppColor.white,
       body: ListView(
@@ -414,28 +419,44 @@ class _CreateProfileState extends State<CreateProfile> {
                             profileImage != null)
                         ? AppColor.primaryColor
                         : AppColor.inactiveButton,
-                    onTap: () {
+                    onTap: () async {
                       if (_globalFormKey.currentState!.validate() &&
                           (_age != 'Select Option' &&
                               _location != 'Select Option' &&
                               _gender != 'Select Option' &&
                               profileImage != null)) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const BottomNavBar(),
-                          ),
-                        );
+                        final prefs = await SharedPreferences.getInstance();
+                        var email = prefs.getString('email');
+                        var password = prefs.getString('password');
+                        var fullName = prefs.getString('name');
+                        await provider.signUp(
+                            email: email!,
+                            password: password!,
+                            fullName: fullName!,
+                            phoneNumber: _phoneNo.text,
+                            gender: _gender,
+                            profileImage: profileImage,
+                            age: _age,
+                            location: _location,
+                            context: context);
+                        // Navigator.pushReplacement(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (_) => const BottomNavBar(),
+                        //   ),
+                        // );
                       }
                     },
-                    child: Text(
-                      'Continue',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: AppColor.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    child: provider.isSignUp
+                        ? buttonCircularIndicator
+                        : Text(
+                            'Continue',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: AppColor.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
               ],

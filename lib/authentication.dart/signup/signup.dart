@@ -28,7 +28,6 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     // used to determined the screen size for responsive design
     var screensize = MediaQuery.of(context).size;
-    //var provider = Provider.of<Authentication>(context);
 
     return Scaffold(
       backgroundColor: AppColor.white,
@@ -209,7 +208,8 @@ class _SignUpState extends State<SignUp> {
                                 ? AppColor.primaryColor
                                 : AppColor.inactiveButton,
                             onTap: () async {
-                              if (_globalFormKey.currentState!.validate()) {
+                              if (_globalFormKey.currentState!.validate() &&
+                                  ischecked) {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -218,13 +218,11 @@ class _SignUpState extends State<SignUp> {
                                 );
                               }
 
-                              // final prefs =
-                              //     await SharedPreferences.getInstance();
-                              // prefs.setString('email', _emailField.text);
-                              // prefs.setString('password', _passwordField.text);
-                              // prefs.setString('name', _fullName.text);
-                              // setState(() {});
-                              // await _getToken();
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.setString('email', _emailField.text);
+                              prefs.setString('password', _passwordField.text);
+                              prefs.setString('name', _fullName.text);
                             },
                             child: Text(
                               'Sign Up',

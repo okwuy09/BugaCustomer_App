@@ -5,11 +5,9 @@ import 'package:buga_customer/component/mytextform.dart';
 import 'package:buga_customer/component/social_container.dart';
 import 'package:buga_customer/component/style.dart';
 import 'package:buga_customer/homepage/bottomnarvbar.dart';
-import 'package:buga_customer/homepage/homepage.dart';
 import 'package:buga_customer/services/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -30,7 +28,7 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     // used to determined the screen size for responsive design
     var screensize = MediaQuery.of(context).size;
-    //var provider = Provider.of<Authentication>(context);
+    var provider = Provider.of<Authentication>(context);
 
     return Scaffold(
       backgroundColor: AppColor.white,
@@ -182,29 +180,24 @@ class _SignInState extends State<SignIn> {
                                 ? AppColor.primaryColor
                                 : AppColor.inactiveButton,
                             onTap: () async {
-                              // final prefs =
-                              //     await SharedPreferences.getInstance();
-                              // prefs.setString('email', _emailField.text);
-                              // prefs.setString('password', _passwordField.text);
-                              // setState(() {});
-                              // await _getToken();
                               if (_globalFormKey.currentState!.validate()) {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const BottomNavBar(),
-                                  ),
+                                await provider.signIn(
+                                  email: _emailField.text,
+                                  password: _passwordField.text,
+                                  context: context,
                                 );
                               }
                             },
-                            child: Text(
-                              'Log In',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: AppColor.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            child: provider.isSignIn
+                                ? buttonCircularIndicator
+                                : Text(
+                                    'Log In',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: AppColor.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                           ),
                           const SizedBox(height: 8),
                           Row(

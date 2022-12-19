@@ -3,8 +3,11 @@ import 'package:buga_customer/component/homewidget.dart';
 import 'package:buga_customer/component/style.dart';
 import 'package:buga_customer/homepage/quotepage.dart';
 import 'package:buga_customer/homepage/searchdelegate.dart';
+import 'package:buga_customer/model/users.dart';
+import 'package:buga_customer/services/provider.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "174937181034",
+    "project_id": "buga-a43f9",
+    "storage_bucket": "buga-a43f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174937181034:android:537e5055f9c299f1873313",
+        "android_client_info": {
+          "package_name": "com.example.buga_customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "174937181034-42id6l3tfprs4o0vedvp8pvaijcck33i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQTht5qFIsb8QwtS4pCrSowqNrdvRrEiI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "174937181034-42id6l3tfprs4o0vedvp8pvaijcck33i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

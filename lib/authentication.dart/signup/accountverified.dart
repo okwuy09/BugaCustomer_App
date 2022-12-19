@@ -3,6 +3,7 @@ import 'package:buga_customer/component/button.dart';
 import 'package:buga_customer/component/colors.dart';
 import 'package:buga_customer/component/style.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountVerified extends StatefulWidget {
   const AccountVerified({
@@ -17,9 +18,16 @@ class AccountVerified extends StatefulWidget {
 class _AccountVerifiedState extends State<AccountVerified> {
   final GlobalKey<FormState> _globalFormKey = GlobalKey<FormState>();
 
+  email() async {
+    final prefs = await SharedPreferences.getInstance();
+    var email = prefs.getString('email');
+    return email;
+  }
+
   @override
   Widget build(BuildContext context) {
     // used to determined the screen size for responsive design
+
     var screensize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColor.white,
@@ -80,7 +88,7 @@ class _AccountVerifiedState extends State<AccountVerified> {
                           ),
                           children: [
                             TextSpan(
-                              text: 'caramelcoker@hotmail.com ',
+                              text: email.toString(),
                               style: style.copyWith(
                                 color: AppColor.primaryColor,
                                 fontSize: 14,
